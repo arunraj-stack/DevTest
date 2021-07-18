@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using DeveloperTest.Business.Interfaces;
+﻿using DeveloperTest.Business.Interfaces;
 using DeveloperTest.Database;
 using DeveloperTest.Database.Models;
 using DeveloperTest.Models;
+using System.Linq;
 
 namespace DeveloperTest.Business
 {
@@ -21,6 +21,7 @@ namespace DeveloperTest.Business
             {
                 JobId = x.JobId,
                 Engineer = x.Engineer,
+                Customer = mapToCustomerModel(x.Customer),
                 When = x.When
             }).ToArray();
         }
@@ -31,6 +32,7 @@ namespace DeveloperTest.Business
             {
                 JobId = x.JobId,
                 Engineer = x.Engineer,
+                Customer = mapToCustomerModel(x.Customer),
                 When = x.When
             }).SingleOrDefault();
         }
@@ -40,6 +42,7 @@ namespace DeveloperTest.Business
             var addedJob = context.Jobs.Add(new Job
             {
                 Engineer = model.Engineer,
+                CustomerId = model.CustomerId,
                 When = model.When
             });
 
@@ -49,8 +52,20 @@ namespace DeveloperTest.Business
             {
                 JobId = addedJob.Entity.JobId,
                 Engineer = addedJob.Entity.Engineer,
+                Customer = mapToCustomerModel(addedJob.Entity.Customer),
                 When = addedJob.Entity.When
             };
+        }
+
+        private static CustomerModel mapToCustomerModel(Customer customer)
+        {
+            if (customer == null) 
+            {
+                // This is to manage the existing Job entries without customer
+                return new CustomerModel();
+            }
+
+            return new CustomerModel() { CustomerId = customer.CustomerId, Name = customer.Name, Type = customer.Type };
         }
     }
 }

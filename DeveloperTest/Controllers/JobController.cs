@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using DeveloperTest.Business.Interfaces;
+﻿using DeveloperTest.Business.Interfaces;
 using DeveloperTest.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace DeveloperTest.Controllers
 {
